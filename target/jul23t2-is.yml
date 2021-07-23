@@ -1,0 +1,17 @@
+---
+apiVersion: "v1"
+kind: "List"
+items:
+- apiVersion: "image.openshift.io/v1"
+  kind: "ImageStream"
+  metadata:
+    name: "jul23t2"
+  spec:
+    lookupPolicy:
+      local: true
+    tags:
+    - from:
+        kind: "ImageStreamImage"
+        name: "jul23t2@sha256:767e05e4e673e009e4271d1cee709a5da4b561654db155e4ebbc359b3a48ee3c"
+        namespace: "sumit"
+      name: "latest"
