@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <endpoint id="jult245j2x" uri="dozer:jult245j2x?sourceModel=jschema.Jschema&amp;targetModel=generated_1627117046487.ABCOrder&amp;marshalId=generated_1627117046487&amp;unmarshalId=jschemaJschema&amp;mappingFile=transformation1.xml"/>
+        <endpoint id="jul24t5nowt" uri="dozer:jul24t5nowt?sourceModel=jschema.Jschema&amp;targetModel=generated_1627116639062.ABCOrder&amp;marshalId=generated_1627116639062&amp;unmarshalId=jschemaJschema&amp;mappingFile=transformation.xml"/>
+        <dataFormats>
+            <json id="jschemaJschema" library="Jackson" unmarshalTypeName="jschema.Jschema"/>
+            <jaxb contextPath="generated_1627116639062" id="generated_1627116639062"/>
+            <jaxb contextPath="generated_1627117046487" id="generated_1627117046487"/>
+        </dataFormats>
+        <route id="simple-route">
+            <from id="_to1" uri="netty-http:http://localhost:8045/printone"/>
+            <to id="_to2" uri="netty-http:http://dummy.restapiexample.com:80/api/v1/employees"/>
+            <to id="_to3" uri="ref:jul24t5nowt"/>
+            <setBody id="route-setBody">
+                <simple>${body}</simple>
+            </setBody>
+            <log id="route-log" message=">>> ${body}"/>
+        </route>
+        <route id="_route1">
+            <from id="_from1" uri="netty-http:http://localhost:8046/printtwo"/>
+            <to id="_to4" uri="restlet:http://dummy.restapiexample.com:80/api/v1/employees"/>
+            <to id="_to5" uri="ref:jult245j2x"/>
+            <log id="_log1" message="${body}"/>
+        </route>
+    </camelContext>
+</beans>
