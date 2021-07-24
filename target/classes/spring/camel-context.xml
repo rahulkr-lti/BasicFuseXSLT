@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring       https://camel.apache.org/schema/spring/camel-spring.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <route id="simple-route">
+            <from id="_to1" uri="restlet:http://localhost:8100/printone"/>
+            <to id="_to2" uri="restlet:http://dummy.restapiexample.com:80/api/v1/employees"/>
+            <to id="_to3" uri="file:fileOut?fileName=from8085.json"/>
+            <setBody id="route-setBody">
+                <simple>Successfully fetched data from  "http://dummy.restapiexample.com/api/v1/employees" and saved in outputfole folder with name "fromdummy.json"</simple>
+            </setBody>
+            <log id="route-log" message=">>> ${body}"/>
+        </route>
+        <route id="_route1">
+            <from id="_from1" uri="restlet:http://localhost:8200/printtwo"/>
+            <to id="_to4" uri="restlet:http://dummy.restapiexample.com:80/api/v1/employees"/>
+            <to id="_to5" uri="file:fileOut?fileName=from8086.json"/>
+            <log id="_log1" message="${body}"/>
+        </route>
+        <route id="_route2">
+            <from id="_from2" uri="restlet:http://localhost:8300/printthree"/>
+            <setBody id="_setBody1">
+                <simple>Hello is working</simple>
+            </setBody>
+            <log id="_log2" message="success"/>
+        </route>
+        <route id="_route3">
+            <from id="_from3" uri="restlet:http://localhost:8400/printfour"/>
+            <to id="_to6" uri="restlet:http://dummy.restapiexample.com:80/api/v1/employees"/>
+            <log id="_log3" message="${body}"/>
+        </route>
+    </camelContext>
+</beans>
